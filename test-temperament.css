@@ -1,0 +1,634 @@
+/* Estilos para el test de temperamento */
+
+.pagination-controls {
+  display: none !important; /* Ocultar completamente los controles de paginación */
+}
+
+/* Mostrar todas las preguntas en una sola página */
+.page {
+  display: block !important; /* Asegurar que todas las páginas sean visibles */
+}
+
+/* Pagination container */
+.pagination-container {
+  position: relative;
+}
+
+.button-action {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Ajustes para modo oscuro */
+.dark .pagination-controls span {
+  color: #e0e6ed;
+}
+
+/* Contenedor principal */
+.bs-stepper.stepper-form-test-temperament {
+  background-color: white;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* Contenedor de instrucciones */
+.instructions-container .card {
+  border: 1px solid #e0e6ed;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+}
+
+.instructions-container .card-title {
+  color: #1b2e4b;
+  font-weight: 700;
+  font-size: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.info-box {
+  background-color: #f8f9fa;
+  border-left: 4px solid #4361ee;
+  padding: 1rem;
+  border-radius: 0.25rem;
+  margin-top: 1.5rem;
+}
+.temperament-list {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.temperament-list li {
+  margin-bottom: 0.5rem;
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.temperament-list li:before {
+  content: "•";
+  position: absolute;
+  left: 0.5rem;
+  color: #4361ee;
+}
+
+/* Contenedor de preguntas */
+.questions-container {
+  max-width: 100%;
+}
+
+.question-card {
+  border: 1px solid #e0e6ed;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin-bottom: 1.5rem; /* Aumentar el espacio entre preguntas */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.02);
+  transition: all 0.3s ease;
+}
+
+.question-card:hover {
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0, 0.1);
+}
+
+.question-title {
+  font-weight: 600;
+  margin-bottom: 0.5rem; /* Reducido para hacer más compacto */
+  color: #1b2e4b;
+}
+
+.option-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 5px;
+}
+
+/* Estilos para las opciones */
+.option-card {
+  flex: 1;
+  min-width: 150px;
+  padding: 10px;
+  border: 1px solid #e0e6ed;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.option-card:hover {
+  border-color: #4361ee;
+  background-color: #f8f9fa;
+}
+
+.option-card.selected {
+  border-color: #4361ee;
+  background-color: #eef1ff;
+}
+
+.option-label {
+  font-weight: 600;
+  color: #3b3f5c;
+  margin-left: 30px;
+}
+
+.option-card .option-check {
+  position: absolute;
+  left: 10px;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #e0e6ed;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.option-card.selected .option-check {
+  border-color: #4361ee;
+  background-color: #4361ee;
+}
+
+.option-card.selected .option-check:after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: white;
+}
+
+/* Indicador de progreso */
+.progress-container {
+  margin: 2rem 0;
+}
+
+.progress {
+  height: 10px;
+  border-radius: 5px;
+  background-color: #e0e6ed;
+}
+
+.progress-bar {
+  background-color: #4361ee;
+  transition: width 0.3s ease;
+}
+
+.progress-text {
+  font-weight: 600;
+  color: #3b3f5c;
+}
+
+/* Resultados */
+.result-list {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.result-list li {
+  margin-bottom: 0.75rem;
+}
+
+.result-value {
+  font-weight: 700;
+  color: #4361ee;
+}
+
+.progress-charts .progress {
+  height: 20px;
+}
+
+.sanguine-color {
+  background-color: #e7515a;
+}
+
+.choleric-color {
+  background-color: #e2a03f;
+}
+
+.melancholic-color {
+  background-color: #2196f3;
+}
+
+.phlegmatic-color {
+  background-color: #8dbf42;
+}
+
+.description-box {
+  background-color: #f8f9fa;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  margin-top: 1rem;
+}
+
+.temperament-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 2rem 0;
+  gap: 20px; /* Espacio específico de 20px entre elementos */
+}
+
+.temperament-item {
+  display: flex;
+  align-items: center;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  width: 200px;
+}
+
+.temperament-icon {
+  margin-right: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.temp-icon {
+  width: 50px;
+  height: 50px;
+}
+
+.temperament-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.temperament-title {
+  font-weight: 600;
+  color: #4361ee;
+  font-size: 0.875rem;
+}
+
+.temperament-value {
+  font-weight: 700;
+  font-size: 1.125rem;
+  color: #3b3f5c;
+}
+
+/* Estilos para el Summary */
+.temperament-summary {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.summary-list {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.w-summary-icon {
+  margin-right: 12px;
+}
+
+.icon-circle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-circle img {
+  width: 22px;
+  height: 22px;
+}
+
+/* Colores específicos para cada temperamento */
+.sanguine-bg {
+  background-color: #e74c3c; /* Rojo para Sanguine */
+}
+
+.choleric-bg {
+  background-color: #e2a03f; /* Naranja/Ámbar para Choleric */
+}
+
+.melancholic-bg {
+  background-color: #3498db; /* Azul para Melancholic */
+}
+
+.phlegmatic-bg {
+  background-color: #7ed957; /* Verde para Phlegmatic */
+}
+
+.w-summary-details {
+  flex: 1;
+}
+
+.w-summary-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.w-summary-info span {
+  font-size: 0.875rem;
+  color: #3b3f5c;
+}
+
+.w-summary-info .summary-count {
+  font-weight: 600;
+}
+
+.w-summary-stats {
+  width: 100%;
+}
+
+.progress {
+  height: 6px;
+  border-radius: 30px;
+  background-color: #f1f2f3;
+  margin-top: 4px;
+}
+
+/* Barras de progreso para cada temperamento */
+.sanguine-bar {
+  background: linear-gradient(to right, #e74c3c, #f75e4e) !important; /* Rojo para Sanguine */
+}
+
+.choleric-bar {
+  background: linear-gradient(to right, #e2a03f, #f0b755) !important; /* Naranja/Ámbar para Choleric */
+}
+
+.melancholic-bar {
+  background: linear-gradient(to right, #3498db, #5dace0) !important; /* Azul para Melancholic */
+}
+
+.phlegmatic-bar {
+  background: linear-gradient(to right, #7ed957, #95e472) !important; /* Verde para Phlegmatic */
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+  .option-row {
+    flex-direction: column;
+  }
+  
+  .option-card {
+    min-width: 100%;
+    margin-bottom: 8px;
+  }
+  
+  .button-action {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .button-action button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 576px) {
+  .bs-stepper-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .bs-stepper-header .line {
+    display: none;
+  }
+  
+  .bs-stepper-header .step {
+    padding: 10px 0;
+    width: 100%;
+  }
+  
+  .progress-charts label {
+    margin-bottom: 5px;
+  }
+}
+
+/* Estilos para modo oscuro */
+.dark .bs-stepper.stepper-form-test-temperament {
+  background-color: #1a1c2d;
+}
+
+.dark .instructions-container .card,
+.dark .question-card {
+  background-color: #1a1c2d;
+  border-color: #3b3f5c;
+}
+
+.dark .info-box,
+.dark .description-box {
+  background-color: #0e1726;
+}
+
+.dark .instructions-container .card-title,
+.dark .question-title {
+  color: #e0e6ed;
+}
+
+.dark .option-card {
+  border-color: #3b3f5c;
+  background-color: #1a1c2d;
+}
+
+.dark .option-card:hover {
+  background-color: #0e1726;
+}
+
+.dark .option-card.selected {
+  background-color: #0e1726;
+}
+
+.dark .option-label {
+  color: #e0e6ed;
+}
+
+.dark .progress {
+  background-color: #3b3f5c;
+}
+
+.dark .progress-text {
+  color: #e0e6ed;
+}
+
+/* Estilos para el encabezado y botones */
+.wallet-header {
+  padding: 15px 15px 0 15px;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.action-buttons .btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 10px;
+  border-radius: 5px;
+  white-space: nowrap;
+}
+
+.action-buttons .btn svg {
+  margin-right: 2px;
+}
+
+/* nuevos cambios */
+
+/* Estilos para el widget de cartera */
+.widget-wallet-one {
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 25px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  border: 1px solid #e0e6ed;
+}
+
+/* Modo oscuro para el widget */
+.dark .widget-wallet-one {
+  background-color: #1a1c2d;
+  border: 1px solid #3b3f5c;
+}
+
+/* Información de la cartera */
+.wallet-info {
+  padding: 10px 0;
+}
+
+/* Título de la cartera */
+.wallet-title {
+  color: #1e1e1f;
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: 0.5px;
+}
+
+.dark .wallet-title {
+  color: #d0d0d0;
+}
+
+/* Monto total */
+.total-amount {
+  font-size: 36px;
+  font-weight: 700;
+  color: #1b2e4b;
+  margin: 15px 0;
+}
+
+.dark .total-amount {
+  color: #e0e6ed;
+}
+
+/* Enlace de texto de la cartera */
+.wallet-text {
+  color: #4361ee;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.wallet-text:hover {
+  color: #2643e9;
+  text-decoration: none;
+}
+
+.dark .wallet-text {
+  color: #4361ee;
+}
+
+.dark .wallet-text:hover {
+  color: #5e75f3;
+}
+
+/* Icono SVG dentro del texto de la cartera */
+.wallet-text svg {
+  color: #4361ee;
+  margin-right: 5px;
+}
+
+/* Estilos para los botones de acción */
+.wallet-action {
+  margin-top: 15px;
+}
+
+.wallet-action .btn {
+  padding: 10px 20px;
+  min-width: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.wallet-action .btn svg {
+  margin-right: 8px;
+}
+
+/* Ajustes para el separador */
+.widget-wallet-one hr {
+  margin: 20px 0;
+  border-color: #f1f2f3;
+}
+
+.dark .widget-wallet-one hr {
+  border-color: #3b3f5c;
+}
+
+/* Estilos específicos para los botones inferiores */
+.wallet-action .btn-secondary, 
+.wallet-action .btn-primary {
+  padding: 10px 15px;
+  font-weight: 600;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .widget-wallet-one {
+    padding: 15px;
+  }
+  
+  .total-amount {
+    font-size: 28px;
+  }
+  
+  .wallet-action {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .wallet-action .btn {
+    width: 100%;
+  }
+  
+  .wallet-action .btn-secondary,
+  .wallet-action .btn-primary {
+    width: 100% !important;
+  }
+  .wallet-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .action-buttons {
+    margin-top: 10px;
+    width: 100%;
+  }
+  
+  .action-buttons .btn {
+    flex: 1;
+  }
+}
+
+@media (max-width: 480px) {
+  .action-buttons {
+    flex-direction: column;
+  }
+}
