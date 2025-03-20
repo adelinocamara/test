@@ -1,0 +1,479 @@
+<%
+  const LOCAL_PAGE = Object.freeze({
+    title: LOCAL_STRINGS.photo_profile,
+    description: {
+      en: '',
+      es: ''
+    },
+    keywords: {
+      en: '',
+      es: ''
+    },
+    robots: 'index, follow',
+    canonical: '',
+    og_url: '',
+    og_site_name: {
+      en: '',
+      es: ''
+    },
+    og_image: '',
+    twitter_card: {
+      en: '',
+      es: ''
+    },
+    stylesheets: [
+    ]
+  })
+%>
+<%- include('./header-page-logged.ejs', {
+  LOCAL_PAGE
+}) -%>
+<!--  BEGIN *** CONTENT ***  -->
+<div class="row layout-top-spacing">
+  <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
+    <div class="col-xl-12 col-lg-12 col-md-6 col-sm-12 col-12 layout-spacing">
+      <div class="widget widget-five">
+        <div class="widget-heading">
+          <a href="javascript:void(0)" class="task-info">
+            <div class="usr-avatar">
+              <span>
+                <img src="/ministry/res/src/assets/img/ministries/logos/<%=ministry.logo%>" width="40px" title="<%=ministry.ministry%>" alt="<%=ministry.ministry%>">
+              </span>
+            </div>
+            <div class="w-title">
+              <h3><%=ministry.ministry%></h3>
+            </div>
+          </a>
+        </div>
+        <div id="flStackForm" class="col-lg-12 layout-spacing layout-top-spacing">
+          <div class="statbox widget box box-shadow">
+            <div class="widget-header">
+              <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                  <h4><%=LOCAL_STRINGS.office_hours[language]%></h4>
+                </div>
+              </div>
+            </div>
+            <div class="widget-content widget-content-area">
+              <div class="row">
+                <div class="col-lg-11 mx-auto">
+                  <div class="row">
+                    <div class="col-xl-10 col-lg-12 col-md-8 mt-md-0 mt-4">
+                      <form class="form" id="frmHours" name="frmHours" enctype="multipart/form-data">
+                        <div class="row">
+                          <div class="col-md-3">
+                            <label for="txtMonday1">
+                              <%=LOCAL_STRINGS.day_monday[language]%>
+                            </label>
+                            <div class="col-sm-10">
+                              <div class="input-group mb-3">
+                                <input id="txtMonday1" name="txtMonday1" type="text" class="form-control" placeholder="##:## AM - ##:## PM" value="<%=ministry.monday_hours_1%>">
+                                <div id="msgMonday1"></div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-3">
+                            <label for="txtMonday2">
+                              <%=LOCAL_STRINGS.day_monday[language]%>
+                            </label>
+                            <div class="col-sm-10">
+                              <div class="input-group mb-3">
+                                <input id="txtMonday2" name="txtMonday2" type="text" class="form-control" placeholder="##:## AM - ##:## PM" value="<%=ministry.monday_hours_2%>">
+                                <div id="msgMonday2"></div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-3">
+                            <label for="txtTuesday1">
+                              <%=LOCAL_STRINGS.day_tuesday[language]%>
+                            </label>
+                            <div class="col-sm-10">
+                              <div class="input-group mb-3">
+                                <input id="txtTuesday1" name="txtTuesday1" type="text" class="form-control" placeholder="##:## AM - ##:## PM" value="<%=ministry.tuesday_hours_1%>">
+                                <div id="msgTuesday1"></div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-3">
+                            <label for="txtTuesday2">
+                              <%=LOCAL_STRINGS.day_tuesday[language]%>
+                            </label>
+                            <div class="col-sm-10">
+                              <div class="input-group mb-3">
+                                <input id="txtTuesday2" name="txtTuesday2" type="text" class="form-control" placeholder="##:## AM - ##:## PM" value="<%=ministry.tuesday_hours_2%>">
+                                <div id="msgTuesday2"></div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-3">
+                            <label for="txtWednesday1">
+                              <%=LOCAL_STRINGS.day_wednesday[language]%>
+                            </label>
+                            <div class="col-sm-10">
+                              <div class="input-group mb-3">
+                                <input id="txtWednesday1" name="txtWednesday1" type="text" class="form-control" placeholder="##:## AM - ##:## PM" value="<%=ministry.wednesday_hours_1%>">
+                                <div id="msgWednesday1"></div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-3">
+                            <label for="txtWednesday2">
+                              <%=LOCAL_STRINGS.day_wednesday[language]%>
+                            </label>
+                            <div class="col-sm-10">
+                              <div class="input-group mb-3">
+                                <input id="txtWednesday2" name="txtWednesday2" type="text" class="form-control" placeholder="##:## AM - ##:## PM" value="<%=ministry.wednesday_hours_2%>">
+                                <div id="msgWednesday2"></div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-3">
+                            <label for="txtThursday1">
+                              <%=LOCAL_STRINGS.day_thursday[language]%>
+                            </label>
+                            <div class="col-sm-10">
+                              <div class="input-group mb-3">
+                                <input id="txtThursday1" name="txtThursday1" type="text" class="form-control" placeholder="##:## AM - ##:## PM" value="<%=ministry.thursday_hours_1%>">
+                                <div id="msgThursday1"></div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-3">
+                            <label for="txtThursday2">
+                              <%=LOCAL_STRINGS.day_thursday[language]%>
+                            </label>
+                            <div class="col-sm-10">
+                              <div class="input-group mb-3">
+                                <input id="txtThursday2" name="txtThursday2" type="text" class="form-control" placeholder="##:## AM - ##:## PM" value="<%=ministry.thursday_hours_2%>">
+                                <div id="msgThursday2"></div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-3">
+                            <label for="txtFriday1">
+                              <%=LOCAL_STRINGS.day_friday[language]%>
+                            </label>
+                            <div class="col-sm-10">
+                              <div class="input-group mb-3">
+                                <input id="txtFriday1" name="txtFriday1" type="text" class="form-control" placeholder="##:## AM - ##:## PM" value="<%=ministry.friday_hours_1%>">
+                                <div id="msgFriday1"></div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-3">
+                            <label for="txtFriday2">
+                              <%=LOCAL_STRINGS.day_friday[language]%>
+                            </label>
+                            <div class="col-sm-10">
+                              <div class="input-group mb-3">
+                                <input id="txtFriday2" name="txtFriday2" type="text" class="form-control" placeholder="##:## AM - ##:## PM" value="<%=ministry.friday_hours_2%>">
+                                <div id="msgFriday2"></div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-3">
+                            <label for="txtSaturday1">
+                              <%=LOCAL_STRINGS.day_saturday[language]%>
+                            </label>
+                            <div class="col-sm-10">
+                              <div class="input-group mb-3">
+                                <input id="txtSaturday1" name="txtSaturday1" type="text" class="form-control" placeholder="##:## AM - ##:## PM" value="<%=ministry.saturday_hours_1%>">
+                                <div id="msgSaturday1"></div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-3">
+                            <label for="txtSaturday2">
+                              <%=LOCAL_STRINGS.day_saturday[language]%>
+                            </label>
+                            <div class="col-sm-10">
+                              <div class="input-group mb-3">
+                                <input id="txtSaturday2" name="txtSaturday2" type="text" class="form-control" placeholder="##:## AM - ##:## PM" value="<%=ministry.saturday_hours_2%>">
+                                <div id="msgSaturday2"></div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-3">
+                            <label for="txtSunday1">
+                              <%=LOCAL_STRINGS.day_sunday[language]%>
+                            </label>
+                            <div class="col-sm-10">
+                              <div class="input-group mb-3">
+                                <input id="txtSunday1" name="txtSunday1" type="text" class="form-control" placeholder="##:## AM - ##:## PM" value="<%=ministry.sunday_hours_1%>">
+                                <div id="msgSunday1"></div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-3">
+                            <label for="txtSunday2">
+                              <%=LOCAL_STRINGS.day_sunday[language]%>
+                            </label>
+                            <div class="col-sm-10">
+                              <div class="input-group mb-3">
+                                <input id="txtSunday2" name="txtSunday2" type="text" class="form-control" placeholder="##:## AM - ##:## PM" value="<%=ministry.sunday_hours_2%>">
+                                <div id="msgSunday2"></div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-12">
+                            <label class="col-sm-2 col-form-label">&nbsp;</label>
+                            <div class="col-sm-10">
+                              <button id="btnSaveHours" type="button" name="btnSaveHours" class="btn btn-success mb-2 me-4">
+                                <span>
+                                  <i id="icoSaveHours" name="icoSaveHours" class="fa fa-spinner fa-spin d-none"></i> <%=LOCAL_STRINGS.save[language]%>
+                                </span>
+                              </button>
+                              <button id="btnCancelHours" name="btnCancelHours" type="button" class="btn btn-warning mb-2 me-4">
+                                <i id="icoCancel" class="fa fa-spinner fa-spin d-none"></i> <%=LOCAL_STRINGS.cancel[language]%>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--  END *** CONTENT ***  -->
+<%- include('./footer-page-logged.ejs'); -%>
+<!--  BEGIN *** SCRIPTS ***  -->
+<script src="/profile/res/src/assets/js/scrollspyNav.js"></script>
+<script>
+  const txtMonday1 = new SLInput('txtMonday1', {
+    messages: {
+      msgDiv: 'msgMonday1',
+      show: showMsg,
+      hide: hideMsg
+    },
+    max_characters: {
+      error: '<%=LOCAL_STRINGS.maxcharacters_day_hours[language]%>',
+      max_number: 20
+    }
+  })
+  const txtMonday2 = new SLInput('txtMonday2', {
+    messages: {
+      msgDiv: 'msgMonday2',
+      show: showMsg,
+      hide: hideMsg
+    },
+    max_characters: {
+      error: '<%=LOCAL_STRINGS.maxcharacters_day_hours[language]%>',
+      max_number: 20
+    }
+  })
+  const txtTuesday1 = new SLInput('txtTuesday1', {
+    messages: {
+      msgDiv: 'msgTuesday1',
+      show: showMsg,
+      hide: hideMsg
+    },
+    max_characters: {
+      error: '<%=LOCAL_STRINGS.maxcharacters_day_hours[language]%>',
+      max_number: 20
+    }
+  })
+  const txtTuesday2 = new SLInput('txtTuesday2', {
+    messages: {
+      msgDiv: 'msgTuesday2',
+      show: showMsg,
+      hide: hideMsg
+    },
+    max_characters: {
+      error: '<%=LOCAL_STRINGS.maxcharacters_day_hours[language]%>',
+      max_number: 20
+    }
+  })
+  const txtWednesday1 = new SLInput('txtWednesday1', {
+    messages: {
+      msgDiv: 'msgWednesday1',
+      show: showMsg,
+      hide: hideMsg
+    },
+    max_characters: {
+      error: '<%=LOCAL_STRINGS.maxcharacters_day_hours[language]%>',
+      max_number: 20
+    }
+  })
+  const txtWednesday2 = new SLInput('txtWednesday2', {
+    messages: {
+      msgDiv: 'msgWednesday2',
+      show: showMsg,
+      hide: hideMsg
+    },
+    max_characters: {
+      error: '<%=LOCAL_STRINGS.maxcharacters_day_hours[language]%>',
+      max_number: 20
+    }
+  })
+  const txtThursday1 = new SLInput('txtThursday1', {
+    messages: {
+      msgDiv: 'msgThursday1',
+      show: showMsg,
+      hide: hideMsg
+    },
+    max_characters: {
+      error: '<%=LOCAL_STRINGS.maxcharacters_day_hours[language]%>',
+      max_number: 20
+    }
+  })
+  const txtThursday2 = new SLInput('txtThursday2', {
+    messages: {
+      msgDiv: 'msgThursday2',
+      show: showMsg,
+      hide: hideMsg
+    },
+    max_characters: {
+      error: '<%=LOCAL_STRINGS.maxcharacters_day_hours[language]%>',
+      max_number: 20
+    }
+  })
+  const txtFriday1 = new SLInput('txtFriday1', {
+    messages: {
+      msgDiv: 'msgFriday1',
+      show: showMsg,
+      hide: hideMsg
+    },
+    max_characters: {
+      error: '<%=LOCAL_STRINGS.maxcharacters_day_hours[language]%>',
+      max_number: 20
+    }
+  })
+  const txtFriday2 = new SLInput('txtFriday2', {
+    messages: {
+      msgDiv: 'msgFriday2',
+      show: showMsg,
+      hide: hideMsg
+    },
+    max_characters: {
+      error: '<%=LOCAL_STRINGS.maxcharacters_day_hours[language]%>',
+      max_number: 20
+    }
+  })
+  const txtSaturday1 = new SLInput('txtSaturday1', {
+    messages: {
+      msgDiv: 'msgSaturday1',
+      show: showMsg,
+      hide: hideMsg
+    },
+    max_characters: {
+      error: '<%=LOCAL_STRINGS.maxcharacters_day_hours[language]%>',
+      max_number: 20
+    }
+  })
+  const txtSaturday2 = new SLInput('txtSaturday2', {
+    messages: {
+      msgDiv: 'msgSaturday2',
+      show: showMsg,
+      hide: hideMsg
+    },
+    max_characters: {
+      error: '<%=LOCAL_STRINGS.maxcharacters_day_hours[language]%>',
+      max_number: 20
+    }
+  })
+  const txtSunday1 = new SLInput('txtSunday1', {
+    messages: {
+      msgDiv: 'msgSunday1',
+      show: showMsg,
+      hide: hideMsg
+    },
+    max_characters: {
+      error: '<%=LOCAL_STRINGS.maxcharacters_day_hours[language]%>',
+      max_number: 20
+    }
+  })
+  const txtSunday2 = new SLInput('txtSunday2', {
+    messages: {
+      msgDiv: 'msgSunday2',
+      show: showMsg,
+      hide: hideMsg
+    },
+    max_characters: {
+      error: '<%=LOCAL_STRINGS.maxcharacters_day_hours[language]%>',
+      max_number: 20
+    }
+  })
+  const aoElementsHours = [
+    txtMonday1, txtMonday2, txtTuesday1, txtTuesday2, txtWednesday1, txtWednesday2, txtThursday1, txtThursday2,
+    txtFriday1, txtFriday2, txtSaturday1, txtSaturday2, txtSunday1, txtSunday2
+  ];
+  const frmHours = document.getElementById('frmHours')
+  const icoSaveHours = document.getElementById('icoSaveHours')
+  const btnSaveHours = new SLButton('btnSaveHours', {
+  })
+  btnSaveHours.element.addEventListener('click', async () => {
+    try {
+      console.log('ENTRO A -----------btnSaveHours')
+      var bValid = await SLAreValidElements(aoElementsHours)
+      console.log('valor del valid:',bValid )
+      if (bValid) {
+        icoSaveHours.classList.remove('d-none')
+        console.log('entro al bValid' )
+        var oFormHours = new FormData(frmHours)
+        console.log('creo el objeto de la forma' )
+        console.log('antes del fecth' )
+        console.log(oFormHours )
+        const oFetch = await fetch('/ministry/admin/ministerial-data-hours', {
+            method: 'PUT',
+            body: oFormHours
+        })
+        console.log('ya registro los datos desde el front end ministerial-data-hours')
+        let oValue = await oFetch.json();
+        console.log('code:' + oValue.message.code)
+        if (oValue.message.code == 'record_updated') {
+          Swal.fire({
+            title: '<%=LOCAL_STRINGS.successful_registration[language]%>',
+            text: '',
+            icon: 'success',
+            confirmButtonText: '<%=LOCAL_STRINGS.ok[language]%>',
+            width: 'auto',
+            allowOutsideClick: false,
+            allowEscapeKey: false
+          }).then((bAction) => {
+            window.location.replace('https://www.myministries.app/ministry/admin/min-hours');
+            return;
+          });
+        } else {
+          Swal.fire({
+            title: oValue.message['<%=language%>'],
+            text: '',
+            icon: 'error',
+            confirmButtonText: '<%=LOCAL_STRINGS.ok[language]%>',
+            width: 'auto',
+            allowOutsideClick: false,
+            allowEscapeKey: false
+          }).then((bAction) => {
+            icoSaveHours.classList.add('d-none');
+            return;
+          });
+        }
+      }
+    } catch(err) {
+      console.error(err);
+    }
+  })
+</script>
+<!--  END *** SCRIPTS ***  -->
+</body>
+</html>
