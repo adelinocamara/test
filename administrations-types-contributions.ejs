@@ -1,0 +1,305 @@
+<%
+  const LOCAL_PAGE = Object.freeze({
+    title: LOCAL_STRINGS.types_contributions,
+    description: {
+      en: '',
+      es: ''
+    },
+    keywords: {
+      en: '',
+      es: ''
+    },
+    robots: 'index, follow',
+    canonical: '',
+    og_url: '',
+    og_site_name: {
+      en: '',
+      es: ''
+    },
+    og_image: '',
+    twitter_card: {
+      en: '',
+      es: ''
+    },
+    stylesheets: [
+    "/ministry/res/src/plugins/src/table/datatable/datatables.css",
+    "/ministry/res/src/plugins/css/light/table/datatable/dt-global_style.css",
+    "/ministry/res/src/plugins/css/dark/table/datatable/dt-global_style.css",
+    "/ministry/res/src/assets/css/new_components.css"
+    ]
+  })
+%>
+
+<%- include('./header-page-logged.ejs', {
+  LOCAL_PAGE
+}) -%>
+<!--  BEGIN *** CONTENT ***  -->
+  <div class="row layout-top-spacing">
+    <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
+      <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
+        <!-- Sección modificada del widget-card-five con título centrado y botones -->
+        <!-- Sección rediseñada del widget-card-five con filas separadas -->
+        <!-- Widget card completamente rediseñado siguiendo la estructura de la imagen -->
+  <!-- Widget card con estructura correcta para responsive -->
+<!-- Sección modificada del widget-card-five con título centrado y botones -->
+<div class="widget widget-card-five">
+  <div class="widget-content">
+    <div class="account-box">
+      <div class="title-container">
+        <h2 class="responsive-title">AQUI EL TITULO (responsive, centrado)</h2>
+      </div>
+      <div class="info-box">
+        <div class="icon">
+          <span>
+            <img src="/ministry/res/src/assets/img/ministries/type_contribution.png" alt="<%=LOCAL_STRINGS.types_contributions[language]%>" title="<%=LOCAL_STRINGS.types_contributions[language]%>">
+          </span>
+        </div>
+        <div class="balance-info">
+            <h6>Total Balance</h6>
+            <p>$41,741.42</p>
+        </div>
+      </div>
+      <div class="">
+        <div>
+          <span class="badge badge-light-success">+ 13.6% <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trending-up"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg></span>
+        </div>
+        <div class="button-group-container">
+        <div class="btn-group nav-buttons">
+          <button class="btn nav-btn">Left</button>
+          <button class="btn nav-btn active">Middle</button>
+          <button class="btn nav-btn">Right</button>
+        </div>
+      </div>
+      </div>
+      <!-- Botones nuevos -->
+      
+    </div>
+  </div>
+</div>
+
+      </div>
+      <div id="panel_seccion_add" class="widget-content widget-content-area br-8">
+      </div>
+      <div id="panel_listado" class="widget-content widget-content-area br-8">
+        <%
+        let trimString = function (string, length) {
+          return string.length > length ?
+            string.substring(0, length) + '...' :
+            string;
+        };
+        if (!types_contributions.length) {%>
+        <div class="alert alert-warning">
+          <strong><%=LOCAL_STRINGS.without_typecontributions[language]%></strong>
+        </div>
+        <%} else {%>
+        <div id="ecommerce-list_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+          <div class="dt--top-section">
+            <div class="row">
+              <div class="col-12 col-sm-6 d-flex justify-content-sm-start justify-content-center">
+                <div class="dataTables_length" id="ecommerce-list_length">
+                  <label><%=LOCAL_STRINGS.items_per_page[language]%>:
+                    <select name="ecommerce-list_length" aria-controls="ecommerce-list" class="form-control">
+                      <option value="10">10</option>
+                      <option value="20" selected="selected">20</option>
+                      <option value="50">50</option>
+                      <option value="100">100</option>
+                    </select>
+                  </label>
+                </div>
+              </div>
+              <div class="col-12 col-sm-6 d-flex justify-content-sm-end justify-content-center mt-sm-0 mt-3">
+                <div id="ecommerce-list_filter" class="dataTables_filter">
+                  <label>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
+                      <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                    <input type="search" class="form-control" placeholder="Search..." aria-controls="ecommerce-list">
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table id="ecommerce-list"  class="table dt-table-hover dataTable no-footer" style="width: 100%;" role="grid" aria-describedby="ecommerce-list_info">
+              <thead>
+                  <tr>
+                      <th class="checkbox-column">ID</th>
+                      <th><%=LOCAL_STRINGS.types_contributions[language]%></th>
+                      <th><%=LOCAL_STRINGS.description[language]%></th>
+                      <th><%=LOCAL_STRINGS.from[language]%></th>
+                      <th><%=LOCAL_STRINGS.until[language]%></th>
+                      <th><%=LOCAL_STRINGS.accounting_code[language]%></th>
+                      <th><%=LOCAL_STRINGS.contributions[language]%></th>
+                      <th><%=LOCAL_STRINGS.status[language]%></th>
+                      <th class="no-content text-center"><%=LOCAL_STRINGS.actions[language]%></th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <%
+                    for (i=0; i<types_contributions.length; i++)
+                  {%>
+                    <tr>
+                      <td>
+                        <a href="/ministry/admin/administrations-types-contributions-edit?id=<%=types_contributions[i].id_type_contribution%>" title="<%=LOCAL_STRINGS.btn_update[language]%> <%=types_contributions[i].type_contribution%>">
+                          <%=types_contributions[i].id_type_contribution%>
+                        </a>
+                      </td>
+                      <td><h6 class="mb-0"><%=types_contributions[i].type_contribution%></h6></td>
+                      <td>
+                        <%=trimString(types_contributions[i].description, 20)%>
+                      </td>
+                      <td><%=types_contributions[i].start_date_formatted%></td>
+                      <td><%=types_contributions[i].end_date_formatted%></td>
+                      <td><%=types_contributions[i].account_name%>(<%=types_contributions[i].account_code%>)</td>
+                      <td><%=types_contributions[i].count_contributions%></td>
+                      <td><%=types_contributions[i].active%></td>
+                      <td class="text-center">
+                        <div class="action-btns">
+                          <a href="javascript:void(0);" class="action-btn btn-view bs-tooltip me-2" data-toggle="tooltip" data-placement="top" title="View">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                          </a>
+                          <a href="/ministry/admin/administrations-types-contributions-edit?id=<%=types_contributions[i].id_type_contribution%>"
+                            class="action-btn btn-edit bs-tooltip me-2" data-toggle="tooltip" data-placement="top" title="<%=LOCAL_STRINGS.btn_update[language]%> <%=types_contributions[i].type_contribution%>">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
+                          </a>
+                          <a id="anc_delete_types_contributions_<%=types_contributions[i].id_type_contribution%>"
+                            href="#"
+                            title="<%=LOCAL_STRINGS.delete_types_contributions[language]%>"
+                            class="red"
+                            id-type-contribution="<%=types_contributions[i].id_type_contribution%>"
+                            data-ripple=""
+                            onclick="anc_delete_types_contributions_click(event)" class="action-btn btn-delete bs-tooltip" data-toggle="tooltip" data-placement="top">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                          </a>
+                        </div>
+                      </td>
+                    </tr>
+                  <%}%>
+              </tbody>
+            </table>
+          </div>
+          <div class="dt--bottom-section d-sm-flex justify-content-sm-between text-center">
+            <div class="dt--pages-count  mb-sm-0 mb-3">
+              <div class="dataTables_info" id="ecommerce-list_info" role="status" aria-live="polite">
+                <%=LOCAL_STRINGS.total_of_type_of_contributions[language]%>: <%=types_contributions[0].total_rows%>
+              </div>
+            </div>
+            <div class="dt--pagination">
+              <div class="dataTables_paginate paging_simple_numbers" id="ecommerce-list_paginate">
+                <%
+                  var iTotalRows = types_contributions[0].total_rows;
+                  var iNumPages = Math.trunc(iTotalRows / limit);
+                  if ((iTotalRows % limit) != 0) {
+                    iNumPages++;
+                  }
+                  if (iNumPages > 1) {
+                    %>
+                      <ul class="pagination">
+                    <%
+                    var iPrevPage = page - 1;
+                    if (iPrevPage > 0) {%>
+                      <li class="paginate_button page-item previous" id="ecommerce-list_previous">
+                        <a href="/ministry/admin/administrations-types-contributions?page=<%=iPrevPage%>" aria-controls="ecommerce-list" data-dt-idx="0" tabindex="0" class="page-link" alt="<%=LOCAL_STRINGS.previous[language]%>">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline>
+                          </svg>
+                        </a>
+                      </li>
+                    <%}
+                    for (iLoop = 1; iLoop <= iNumPages; iLoop++) {
+                      if (iLoop == page) {%>
+                        <li class="paginate_button page-item active">
+                          <a href="/ministry/admin/administrations-types-contributions?page=<%=iLoop%>" aria-controls="ecommerce-list" data-dt-idx="<%=iLoop%>" tabindex="0" class="page-link"><%=iLoop%></a>
+                        </li>
+                      <%} else {%>
+                        <li class="paginate_button page-item ">
+                          <a href="/ministry/admin/administrations-types-contributions?page=<%=iLoop%>" aria-controls="ecommerce-list" data-dt-idx="<%=iLoop%>" tabindex="0" class="page-link"><%=iLoop%></a>
+                        </li>
+                      <%}
+                    }
+                    var iNextPage = page + 1;
+                    if (iNextPage <= iNumPages) {%>
+                      <li class="paginate_button page-item next" id="ecommerce-list_next">
+                        <a href="/ministry/admin/administrations-types-contributions?page=<%=iNextPage%>" aria-controls="ecommerce-list" data-dt-idx="<%=iNextPage%>" tabindex="0" class="page-link" alt="<%=LOCAL_STRINGS.next[language]%>">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline>
+                          </svg>
+                        </a>
+                      </li>
+                    <%}
+                    %>
+                      </ul>
+                    <%
+                  }
+                %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <%}%>
+      </div>
+    </div>
+  </div>
+  <!--  END *** CONTENT ***  -->
+  <%- include('./footer-page-logged.ejs'); -%>
+  <!--  BEGIN *** SCRIPTS ***  -->
+  <script>
+    async function anc_delete_types_contributions_click(event) {
+			event.preventDefault();
+			var oElement = event.currentTarget;
+			console.log("id-type-contribution:  " + parseInt(oElement.getAttribute('id-type-contribution')));
+			Swal.fire({
+				title: "<%=LOCAL_STRINGS.delete_this_type_contribution[language]%>",
+				text: "",
+				icon: "warning",
+				showCancelButton: true,
+				confirmButtonClass: "btn-danger",
+				confirmButtonText: "<%=LOCAL_STRINGS.yes[language]%>",
+				cancelButtonText: "<%=LOCAL_STRINGS.no[language]%>",
+				closeOnConfirm: false,
+				closeOnCancel: false
+			}).then( async (bAction) => {
+				if (bAction.value == true) {
+					const oFetch = await fetch('/ministry/admin/administrations-types-contributions-delete', {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify({
+							id_type_contribution: parseInt(oElement.getAttribute('id-type-contribution'))
+						})
+					});
+					let oValue = await oFetch.json();
+          console.log('code:' + oValue.message.code)
+          if (oValue.message.code === 'completed_operation') {
+            Swal.fire({
+              title: '<%=LOCAL_STRINGS.type_contribution_deleted[language]%>',
+              text: '',
+              icon: 'success',
+              confirmButtonText: '<%=LOCAL_STRINGS.ok[language]%>',
+              width: 'auto',
+              allowOutsideClick: false,
+              allowEscapeKey: false
+            }).then((bAction) => {
+              window.location.replace('/ministry/admin/administrations-types-contributions');
+              return;
+            });
+          } else {
+            Swal.fire({
+              title: oValue.message['<%=language%>'],
+              text: '',
+              icon: 'error',
+              confirmButtonText: '<%=LOCAL_STRINGS.ok[language]%>',
+              width: 'auto',
+              allowOutsideClick: false,
+              allowEscapeKey: false
+            }).then((bAction) => {
+              icoUpdate.classList.add('d-none');
+              return;
+            });
+          }
+				}
+			});
+		}
+  </script>
+  <!--  END *** SCRIPTS ***  -->
+</body>
+</html>
