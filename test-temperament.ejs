@@ -1,0 +1,1207 @@
+<%
+  const LOCAL_PAGE = Object.freeze({
+    title: LOCAL_STRINGS.test_temperament,
+    description: {
+      en: 'Discover your temperament with this test',
+      es: 'Descubre tu temperamento con este test'
+    },
+    keywords: {
+      en: 'temperament, test, personality, sanguine, choleric, melancholic, phlegmatic',
+      es: 'temperamento, test, personalidad, sanguíneo, colérico, melancólico, flemático'
+    },
+    robots: 'index, follow',
+    canonical: '',
+    og_url: '',
+    og_site_name: {
+      en: '',
+      es: ''
+    },
+    og_image: '',
+    twitter_card: {
+      en: '',
+      es: ''
+    },
+    stylesheets: [
+      "/test/res/src/assets/css/light/components/modal.css",
+      "/test/res/src/assets/css/light/apps/notes.css",
+      "/test/res/src/assets/css/dark/components/modal.css",
+      "/test/res/src/assets/css/dark/apps/notes.css",
+      "/profile/res/src/plugins/src/stepper/bsStepper.min.css",
+      "/profile/res/src/plugins/css/light/stepper/custom-bsStepper.css",
+      "/profile/res/src/plugins/css/dark/stepper/custom-bsStepper.css",
+      "/profile/res/src/plugins/css/light/test-temperament.css"
+    ]
+  })
+%>
+<%- include('./header-page-logged.ejs', {
+  LOCAL_PAGE
+}) -%>
+<!--  BEGIN *** CONTENT ***  -->
+<form id="frmMain" enctype="multipart/form-data" onsubmit="return false;">
+  <input id="hid_result_a" name="hid_result_a" type="hidden" value="0" />
+  <input id="hid_result_b" name="hid_result_b" type="hidden" value="0" />
+  <input id="hid_result_c" name="hid_result_c" type="hidden" value="0" />
+  <input id="hid_result_d" name="hid_result_d" type="hidden" value="0" />
+  <div id="flStackForm" class="col-lg-12 layout-spacing layout-top-spacing">
+    <div class="statbox widget box box-shadow">
+      <div class="widget-header">
+        <div class="row">
+          <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+            <div class="d-flex justify-content-between align-items-center">
+              <h4><%=LOCAL_STRINGS.test_temperament[language]%></h4>
+              <div class="action-buttons">
+                <button id="btnMyTemperament" type="button" name="btnMyTemperament" class="btn btn-primary">
+                  <span><%=LOCAL_STRINGS.temperament_my[language]%></span>
+                </button>
+                <button id="btnShowRecords" type="button" name="btnShowRecords" class="btn btn-secondary">
+                  <span><%=LOCAL_STRINGS.my_records[language]%></span>
+                </button>
+                <button id="btnNewTest" type="button" name="btnNewTest" class="btn btn-dark">
+                  <span><%=LOCAL_STRINGS.test_questions_want_todo[language]%></span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <%let count_primary = 0;
+        let count_secondary = 0;
+        let count_choleric = 0;
+        let count_melancholic = 0;
+        let count_phlegmatic = 0;
+        let count_sanguine = 0;
+        let porcentajeSanguineo = 0;
+        let porcentajeColerico = 0;
+        let porcentajeMelancolico = 0;
+        let porcentajeFlematico = 0;
+        let temperament_primary = '';
+        let temperament_secondary = '';
+        let total = 0;
+        let dRegistration = new Date();
+
+        if (!temperamenttest.length) {%>
+          <div class="widget-content widget-content-area">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
+              <div class="widget widget-wallet-one">
+                <div class="wallet-info text-center mb-3">
+                  <p class="wallet-title mb-3"><%=LOCAL_STRINGS.test_temperament_without[language]%></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        <%} else {
+          count_choleric = temperamenttest[0].count_choleric;
+          count_melancholic = temperamenttest[0].count_melancholic;
+          count_phlegmatic = temperamenttest[0].count_phlegmatic;
+          count_sanguine = temperamenttest[0].count_sanguine;
+          temperament_primary = temperamenttest[0].temperament_primary;
+          temperament_secondary = temperamenttest[0].temperament_secondary;
+          dRegistration = temperamenttest[0].d_registration;
+          
+          // Calcula el total de las selecciones
+          total = count_sanguine + count_choleric + count_melancholic + count_phlegmatic;
+
+          // Calcula los porcentajes
+          porcentajeSanguineo = (count_sanguine / total) * 100;
+          porcentajeColerico = (count_choleric / total) * 100;
+          porcentajeMelancolico = (count_melancholic / total) * 100;
+          porcentajeFlematico = (count_phlegmatic / total) * 100;
+          console.log("porcentajeSanguineo:", porcentajeSanguineo)
+
+          // Redondea a enteros para simplificar
+          porcentajeSanguineo = Math.round(porcentajeSanguineo);
+          porcentajeColerico = Math.round(porcentajeColerico);
+          porcentajeMelancolico = Math.round(porcentajeMelancolico);
+          porcentajeFlematico = Math.round(porcentajeFlematico);
+          
+          switch(temperament_primary) {
+            case 'sanguine':
+              temperament_primary = LOCAL_STRINGS.temperament_sanguine[language];
+              count_primary = count_sanguine;
+              break;
+            case 'choleric':
+              temperament_primary = LOCAL_STRINGS.temperament_choleric[language];
+              count_primary = count_choleric;
+              break;
+            case 'melancholic':
+              temperament_primary = LOCAL_STRINGS.temperament_melancholic[language];
+              count_primary = count_melancholic;
+              break;
+            case 'phlegmatic':
+              temperament_primary = LOCAL_STRINGS.temperament_phlegmatic[language];
+              count_primary = count_phlegmatic;
+              break;
+          }
+          switch(temperament_secondary) {
+            case 'sanguine':
+              temperament_secondary = LOCAL_STRINGS.temperament_sanguine[language];
+              count_secondary = count_sanguine;
+              break;
+            case 'choleric':
+              temperament_secondary = LOCAL_STRINGS.temperament_choleric[language];
+              count_secondary = count_choleric;
+              break;
+            case 'melancholic':
+              temperament_secondary = LOCAL_STRINGS.temperament_melancholic[language];
+              count_secondary = count_melancholic;
+              break;
+            case 'phlegmatic':
+              temperament_secondary = LOCAL_STRINGS.temperament_phlegmatic[language];
+              count_secondary = count_phlegmatic;
+              break;
+          }%>
+          <div id="divMyTemperament" name="divMyTemperament" class="widget-content widget-content-area">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
+              <div class="widget widget-wallet-one">
+                <div class="wallet-info">
+                  <div class="wallet-header d-flex justify-content-between align-items-center mb-3">
+                    <p class="wallet-title mb-0"><%=LOCAL_TEST.based_last_evaluation[language]%></p>
+                  </div>
+                  <div class="text-center">
+                    <div class="temperament-container">
+                      <div class="temperament-item">
+                        <div class="temperament-icon">
+                          <img alt="<%=temperament_primary%>" title="<%=temperament_primary%>" src="/profile/res/src/assets/img/users/<%=temperamenttest[0].temperament_primary%>-icon.png" class="temp-icon">
+                        </div>
+                        <div class="temperament-info">
+                          <div class="temperament-title"><%=temperament_primary%></div>
+                          <div class="temperament-value"><%=count_primary%></div>
+                        </div>
+                      </div>
+                      <div class="temperament-item">
+                        <div class="temperament-icon">
+                          <img alt="<%=temperament_secondary%>" title="<%=temperament_secondary%>" src="/profile/res/src/assets/img/users/<%=temperamenttest[0].temperament_secondary%>-icon.png" class="temp-icon">
+                        </div>
+                        <div class="temperament-info">
+                          <div class="temperament-title"><%=temperament_secondary%></div>
+                          <div class="temperament-value"><%=count_secondary%></div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Summary de temperamentos -->
+                    <div class="temperament-summary mt-4">
+                      <div class="summary-list">
+                        <div class="w-summary-icon">
+                          <div class="icon-circle sanguine-bg">
+                            <img src="/profile/res/src/assets/img/users/sanguine-icon.png" alt="<%=LOCAL_STRINGS.temperament_sanguine[language]%>" width="22" height="22">
+                          </div>
+                        </div>
+                        <div class="w-summary-details">
+                          <div class="w-summary-info">
+                            <span><%=LOCAL_STRINGS.temperament_sanguine[language]%> (<%=count_sanguine%>)</span>
+                            <span class="summary-count"><%=porcentajeSanguineo%>%</span>
+                          </div>
+                          <div class="w-summary-stats">
+                            <div class="progress">
+                              <div class="progress-bar sanguine-bar" role="progressbar"
+                                  style="width: <%=porcentajeSanguineo%>%"
+                                  aria-valuenow="<%=porcentajeSanguineo%>"
+                                  aria-valuemin="0"
+                                  aria-valuemax="100"></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="summary-list">
+                        <div class="w-summary-icon">
+                          <div class="icon-circle choleric-bg">
+                            <img src="/profile/res/src/assets/img/users/choleric-icon.png" alt="<%=LOCAL_STRINGS.temperament_choleric[language]%>" width="22" height="22">
+                          </div>
+                        </div>
+                        <div class="w-summary-details">
+                          <div class="w-summary-info">
+                            <span><%=LOCAL_STRINGS.temperament_choleric[language]%> (<%=count_choleric%>)</span>
+                            <span class="summary-count"><%=porcentajeColerico%>%</span>
+                          </div>
+                          <div class="w-summary-stats">
+                            <div class="progress">
+                              <div class="progress-bar choleric-bar" role="progressbar"
+                                  style="width: <%=porcentajeColerico%>%"
+                                  aria-valuenow="<%=porcentajeColerico%>"
+                                  aria-valuemin="0"
+                                  aria-valuemax="100"></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="summary-list">
+                        <div class="w-summary-icon">
+                          <div class="icon-circle melancholic-bg">
+                            <img src="/profile/res/src/assets/img/users/melancholic-icon.png" alt="<%=LOCAL_STRINGS.temperament_melancholic[language]%>" width="22" height="22">
+                          </div>
+                        </div>
+                        <div class="w-summary-details">
+                          <div class="w-summary-info">
+                            <span><%=LOCAL_STRINGS.temperament_melancholic[language]%> (<%=count_melancholic%>)</span>
+                            <span class="summary-count"><%=porcentajeMelancolico%>%</span>
+                          </div>
+                          <div class="w-summary-stats">
+                            <div class="progress">
+                              <div class="progress-bar melancholic-bar" role="progressbar"
+                                  style="width: <%=porcentajeMelancolico%>%"
+                                  aria-valuenow="<%=porcentajeMelancolico%>"
+                                  aria-valuemin="0"
+                                  aria-valuemax="100"></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="summary-list">
+                        <div class="w-summary-icon">
+                          <div class="icon-circle phlegmatic-bg">
+                            <img src="/profile/res/src/assets/img/users/phlegmatic-icon.png" alt="<%=LOCAL_STRINGS.temperament_phlegmatic[language]%>" width="22" height="22">
+                          </div>
+                        </div>
+                        <div class="w-summary-details">
+                          <div class="w-summary-info">
+                            <span><%=LOCAL_STRINGS.temperament_phlegmatic[language]%> (<%=count_phlegmatic%>)</span>
+                            <span class="summary-count"><%=porcentajeFlematico%>%</span>
+                          </div>
+                          <div class="w-summary-stats">
+                            <div class="progress">
+                              <div class="progress-bar phlegmatic-bar" role="progressbar"
+                                  style="width: <%=porcentajeFlematico%>%"
+                                  aria-valuenow="<%=porcentajeFlematico%>"
+                                  aria-valuemin="0"
+                                  aria-valuemax="100"></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        <%}%>
+      <div id="divNewTest" class="widget-content widget-content-area d-none">
+        <div id="divTestInstructions" class="widget-content widget-content-area">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title"><%=LOCAL_STRINGS.instructions[language]%></h5>
+              <p class="card-text"><%=LOCAL_TEST.temperament_instructions[language]%></p>
+              <div class="info-box">
+                <p><%=LOCAL_TEST.temperament_info[language]%></p>
+                <h6><%=LOCAL_STRINGS.results[language]%></h6>
+                <p><%=LOCAL_TEST.temperament_columns[language] %></p>
+                <ul class="temperament-list">
+                  <li><%=LOCAL_TEST.column_a[language]%></li>
+                  <li><%=LOCAL_TEST.column_b[language]%></li>
+                  <li><%=LOCAL_TEST.column_c[language]%></li>
+                  <li><%=LOCAL_TEST.column_d[language]%></li>
+                </ul>
+                <h6><%=LOCAL_TEST.best_temperament[language]%></h6>
+                <p><%=LOCAL_TEST.temperament_conclusion[language] || ""%></p>
+                <button id="btnStartTest" class="btn btn-primary mt-3">
+                  <%=LOCAL_TEST.start_test[language]%>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="line"></div>
+        <div id="divTestSingleQuestion" class="widget-content widget-content-area d-none">
+          <div class="card mb-4">
+            <div class="card-body text-center">
+              <h5 class="card-title"><%=LOCAL_STRINGS.test_temperament[language]%></h5>
+              <p id="questionCounter" class="mb-3"></p>
+              <h6 id="questionTitle" class="mb-4"></h6>
+              <div id="optionsContainer" class="d-grid gap-3 mb-4"></div>
+              <div class="d-flex justify-content-between">
+                <button id="btnBack" class="btn btn-secondary"><%=LOCAL_STRINGS.previous[language]%></button>
+                <button id="btnNext" class="btn btn-primary"><%=LOCAL_STRINGS.next[language]%></button>
+              </div>
+              <div class="progress mt-4">
+                <div id="progressBar" class="progress-bar" role="progressbar" style="width: 2.5%" aria-valuenow="1" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="line"></div>
+        <div id="divResultsTemperament" class="content widget-content widget-content-area d-none" role="tabpanel">
+          <div class="card mb-4">
+            <div class="card-body">
+              <h5 class="card-title">Resultados</h5>
+              <div class="row mb-4">
+                <div class="col-md-6">
+                  <h6><%=LOCAL_TEST.total_sum[language]%></h6>
+                  <ul class="result-list">
+                    <li>a) <%=LOCAL_STRINGS.temperament_sanguine[language]%> = <span id="result-a-display" class="result-value">0</span></li>
+                    <li>b) <%=LOCAL_STRINGS.temperament_choleric[language]%> = <span id="result-b-display" class="result-value">0</span></li>
+                    <li>c) <%=LOCAL_STRINGS.temperament_melancholic[language]%> = <span id="result-c-display" class="result-value">0</span></li>
+                    <li>d) <%=LOCAL_STRINGS.temperament_phlegmatic[language]%> = <span id="result-d-display" class="result-value">0</span></li>
+                  </ul>
+                </div>
+                <div class="col-md-6">
+                  <h6><%=LOCAL_TEST.your_temperament[language]%></h6>
+                  <p><%=LOCAL_TEST.dominant[language]%> <span id="primary-temperament" class="result-value">-</span></p>
+                  <p><%=LOCAL_TEST.secondary[language]%> <span id="secondary-temperament" class="result-value">-</span></p>
+                </div>
+              </div>
+              <p>Primario: <span id="primary-temperament"></span></p>
+              <p>Secundario: <span id="secondary-temperament"></span></p>
+                <div class="summary-list">
+                  <div class="w-summary-icon">
+                    <div class="icon-circle sanguine-bg">
+                      <img src="/profile/res/src/assets/img/users/sanguine-icon.png" alt="<%=LOCAL_STRINGS.temperament_sanguine[language]%>" width="22" height="22">
+                    </div>
+                  </div>
+                  <div class="w-summary-details">
+                    <div class="w-summary-info">
+                      <span><%=LOCAL_STRINGS.temperament_sanguine[language]%> (<%=count_sanguine%>)</span>
+                      <span class="summary-count"><%=porcentajeSanguineo%>%</span>
+                    </div>
+                    <div class="w-summary-stats">
+                      <div class="progress">
+                        <div class="progress-bar sanguine-bar" role="progressbar"
+                            style="width: <%=porcentajeSanguineo%>%"
+                            aria-valuenow="<%=porcentajeSanguineo%>"
+                            aria-valuemin="0"
+                            aria-valuemax="100"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="summary-list">
+                  <div class="w-summary-icon">
+                    <div class="icon-circle choleric-bg">
+                      <img src="/profile/res/src/assets/img/users/choleric-icon.png" alt="<%=LOCAL_STRINGS.temperament_choleric[language]%>" width="22" height="22">
+                    </div>
+                  </div>
+                  <div class="w-summary-details">
+                    <div class="w-summary-info">
+                      <span><%=LOCAL_STRINGS.temperament_choleric[language]%> (<%=count_choleric%>)</span>
+                      <span class="summary-count"><%=porcentajeColerico%>%</span>
+                    </div>
+                    <div class="w-summary-stats">
+                      <div class="progress">
+                        <div class="progress-bar choleric-bar" role="progressbar"
+                            style="width: <%=porcentajeColerico%>%"
+                            aria-valuenow="<%=porcentajeColerico%>"
+                            aria-valuemin="0"
+                            aria-valuemax="100"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="summary-list">
+                  <div class="w-summary-icon">
+                    <div class="icon-circle melancholic-bg">
+                      <img src="/profile/res/src/assets/img/users/melancholic-icon.png" alt="<%=LOCAL_STRINGS.temperament_melancholic[language]%>" width="22" height="22">
+                    </div>
+                  </div>
+                  <div class="w-summary-details">
+                    <div class="w-summary-info">
+                      <span><%=LOCAL_STRINGS.temperament_melancholic[language]%> (<%=count_melancholic%>)</span>
+                      <span class="summary-count"><%=porcentajeMelancolico%>%</span>
+                    </div>
+                    <div class="w-summary-stats">
+                      <div class="progress">
+                        <div class="progress-bar melancholic-bar" role="progressbar"
+                            style="width: <%=porcentajeMelancolico%>%"
+                            aria-valuenow="<%=porcentajeMelancolico%>"
+                            aria-valuemin="0"
+                            aria-valuemax="100"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="summary-list">
+                  <div class="w-summary-icon">
+                    <div class="icon-circle phlegmatic-bg">
+                      <img src="/profile/res/src/assets/img/users/phlegmatic-icon.png" alt="<%=LOCAL_STRINGS.temperament_phlegmatic[language]%>" width="22" height="22">
+                    </div>
+                  </div>
+                  <div class="w-summary-details">
+                    <div class="w-summary-info">
+                      <span><%=LOCAL_STRINGS.temperament_phlegmatic[language]%> (<%=count_phlegmatic%>)</span>
+                      <span class="summary-count"><%=porcentajeFlematico%>%</span>
+                    </div>
+                    <div class="w-summary-stats">
+                      <div class="progress">
+                        <div class="progress-bar phlegmatic-bar" role="progressbar"
+                            style="width: <%=porcentajeFlematico%>%"
+                            aria-valuenow="<%=porcentajeFlematico%>"
+                            aria-valuemin="0"
+                            aria-valuemax="100"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="my-4">
+                <label>Sanguíneo</label>
+                <div class="progress">
+                  <div id="sanguine-bar" class="progress-bar bg-info" role="progressbar" style="width: 0%"></div>
+                </div>
+              </div>
+              <div class="mb-4">
+                <label>Colérico</label>
+                <div class="progress">
+                  <div id="choleric-bar" class="progress-bar bg-danger" role="progressbar" style="width: 0%"></div>
+                </div>
+              </div>
+              <div class="mb-4">
+                <label>Melancólico</label>
+                <div class="progress">
+                  <div id="melancholic-bar" class="progress-bar bg-warning" role="progressbar" style="width: 0%"></div>
+                </div>
+              </div>
+              <div class="mb-4">
+                <label>Flemático</label>
+                <div class="progress">
+                  <div id="phlegmatic-bar" class="progress-bar bg-success" role="progressbar" style="width: 0%"></div>
+                </div>
+              </div>
+
+              <div id="temperament-description" class="mt-3"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="divTestTemperament" class="widget-content widget-content-area d-none">
+        <div class="bs-stepper stepper-form-test-temperament">
+          <div class="bs-stepper-header" role="tablist">
+            
+            
+            <div class="line"></div>
+            <div class="step" data-target="#results-step">
+              <button type="button" class="step-trigger" role="tab">
+                <span class="bs-stepper-circle">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bar-chart-2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                </span>
+                <span class="bs-stepper-label"><%=LOCAL_STRINGS.results[language]%></span>
+              </button>
+            </div>
+          </div>
+          <div class="bs-stepper-content">
+            <!-- Instrucciones -->
+            <div id="instructions-step" class="content instructions-container" role="tabpanel">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title"><%=LOCAL_STRINGS.instructions[language]%></h5>
+                  <p class="card-text"><%=LOCAL_TEST.temperament_instructions[language]%></p>
+                  <div class="info-box">
+                    <p><%=LOCAL_TEST.temperament_info[language]%></p>
+                    <h6><%=LOCAL_STRINGS.results[language]%></h6>
+                    <p><%=LOCAL_TEST.temperament_columns[language] %></p>
+                    <ul class="temperament-list">
+                      <li><%=LOCAL_TEST.column_a[language]%></li>
+                      <li><%=LOCAL_TEST.column_b[language]%></li>
+                      <li><%=LOCAL_TEST.column_c[language]%></li>
+                      <li><%=LOCAL_TEST.column_d[language]%></li>
+                    </ul>
+                    <h6><%=LOCAL_TEST.best_temperament[language]%></h6>
+                    <p><%=LOCAL_TEST.temperament_conclusion[language] || ""%></p>
+                  </div>
+                </div>
+              </div>
+              <div class="button-action mt-4">
+                <button class="btn btn-primary btn-nxt"><%=LOCAL_TEST.start_test[language]%></button>
+              </div>
+            </div>
+            <!-- Resultados -->
+            <div id="results-step" class="content" role="tabpanel">
+              <div class="card mb-4">
+                <div class="card-body">
+                  <h5 class="card-title"><%=LOCAL_TEST.your_results[language]%></h5>
+                  
+                  <div class="row mb-4">
+                    <div class="col-md-6">
+                      <h6><%=LOCAL_TEST.total_sum[language]%></h6>
+                      <ul class="result-list">
+                        <li>a) <%=LOCAL_STRINGS.temperament_sanguine[language]%> = <span id="result-a-display" class="result-value">0</span></li>
+                        <li>b) <%=LOCAL_STRINGS.temperament_choleric[language]%> = <span id="result-b-display" class="result-value">0</span></li>
+                        <li>c) <%=LOCAL_STRINGS.temperament_melancholic[language]%> = <span id="result-c-display" class="result-value">0</span></li>
+                        <li>d) <%=LOCAL_STRINGS.temperament_phlegmatic[language]%> = <span id="result-d-display" class="result-value">0</span></li>
+                      </ul>
+                    </div>
+                    <div class="col-md-6">
+                      <h6><%=LOCAL_TEST.your_temperament[language]%></h6>
+                      <p><%=LOCAL_TEST.dominant[language]%> <span id="primary-temperament" class="result-value">-</span></p>
+                      <p><%=LOCAL_TEST.secondary[language]%> <span id="secondary-temperament" class="result-value">-</span></p>
+                    </div>
+                  </div>
+                  
+                  <div class="progress-charts mb-4">
+                    <div class="row mb-3">
+                      <div class="col-md-3">
+                        <label><%=LOCAL_STRINGS.temperament_sanguine[language]%></label>
+                      </div>
+                      <div class="col-md-9">
+                        <div class="progress">
+                          <div id="sanguine-bar" class="progress-bar sanguine-color" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <div class="col-md-3">
+                        <label><%=LOCAL_STRINGS.temperament_choleric[language]%></label>
+                      </div>
+                      <div class="col-md-9">
+                        <div class="progress">
+                          <div id="choleric-bar" class="progress-bar choleric-color" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <div class="col-md-3">
+                        <label><%=LOCAL_STRINGS.temperament_melancholic[language]%></label>
+                      </div>
+                      <div class="col-md-9">
+                        <div class="progress">
+                          <div id="melancholic-bar" class="progress-bar melancholic-color" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <div class="col-md-3">
+                        <label><%=LOCAL_STRINGS.temperament_phlegmatic[language]%></label>
+                      </div>
+                      <div class="col-md-9">
+                        <div class="progress">
+                          <div id="phlegmatic-bar" class="progress-bar phlegmatic-color" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="temperament-description">
+                    <h6><%=LOCAL_TEST.about_temperament[language]%></h6>
+                    <div id="temperament-description" class="description-box">
+                      <!-- Se llenará dinámicamente con la descripción del temperamento -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="button-action mt-4">
+                aqui
+                <button class="btn btn-secondary btn-prev me-3"><%=LOCAL_STRINGS.previous && LOCAL_STRINGS.previous[language] || "Anterior"%></button>
+                <button id="btn-restart" class="btn btn-primary"><%=LOCAL_TEST.restart_test[language]%></button>
+                <button id="btn-save" class="btn btn-success ms-3"><%=LOCAL_TEST.save_results[language]%></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Sección para mostrar el historial de tests de temperamento -->
+      <div id="divTemperamentRecords" class="widget-content widget-content-area d-none">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title"><%=LOCAL_STRINGS.my_records[language]%></h5>
+            <div class="table-responsive">
+              <table class="table table-bordered table-hover temperament-records-table">
+                <thead>
+                  <tr>
+                    <th><%=LOCAL_STRINGS.temperaments[language] || "Temperamentos"%></th>
+                    <th><%=LOCAL_STRINGS.temperament_sanguine[language]%></th>
+                    <th><%=LOCAL_STRINGS.temperament_choleric[language]%></th>
+                    <th><%=LOCAL_STRINGS.temperament_melancholic[language]%></th>
+                    <th><%=LOCAL_STRINGS.temperament_phlegmatic[language]%></th>
+                    <th><%=LOCAL_STRINGS.date[language] || "Fecha"%></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% if (temperamenttest && temperamenttest.length > 0) {
+                      temperamenttest.forEach(test => { %>
+                        <tr>
+                          <td>
+                            <div class="temperament-overlay">
+                              <div class="temperament-icons">
+                                <img src="/profile/res/src/assets/img/users/<%=test.temperament_primary%>-icon.png" class="primary-icon" alt="<%=test.temperament_primary%>">
+                                <img src="/profile/res/src/assets/img/users/<%=test.temperament_secondary%>-icon.png" class="secondary-icon" alt="<%=test.temperament_secondary%>">
+                              </div>
+                              <div class="temperament-names">
+                                <%
+                                let primaryText = test.temperament_primary;
+                                let secondaryText = test.temperament_secondary;
+                                switch(test.temperament_primary) {
+                                  case 'sanguine': primaryText = LOCAL_STRINGS.temperament_sanguine[language]; break;
+                                  case 'choleric': primaryText = LOCAL_STRINGS.temperament_choleric[language]; break;
+                                  case 'melancholic': primaryText = LOCAL_STRINGS.temperament_melancholic[language]; break;
+                                  case 'phlegmatic': primaryText = LOCAL_STRINGS.temperament_phlegmatic[language]; break;
+                                }
+                                switch(test.temperament_secondary) {
+                                  case 'sanguine': secondaryText = LOCAL_STRINGS.temperament_sanguine[language]; break;
+                                  case 'choleric': secondaryText = LOCAL_STRINGS.temperament_choleric[language]; break;
+                                  case 'melancholic': secondaryText = LOCAL_STRINGS.temperament_melancholic[language]; break;
+                                  case 'phlegmatic': secondaryText = LOCAL_STRINGS.temperament_phlegmatic[language]; break;
+                                }
+                                %>
+                                <span class="primary-name"><%=primaryText%></span>
+                                <span class="secondary-name"><%=secondaryText%></span>
+                              </div>
+                            </div>
+                          </td>
+                          <td><span class="sanguine-value"><%=test.count_sanguine%></span></td>
+                          <td><span class="choleric-value"><%=test.count_choleric%></span></td>
+                          <td><span class="melancholic-value"><%=test.count_melancholic%></span></td>
+                          <td><span class="phlegmatic-value"><%=test.count_phlegmatic%></span></td>
+                          <td><%=new Date(test.dati_create_formatted).toLocaleDateString()%></td>
+                        </tr>
+                  <% });
+                    } else { %>
+                    <tr>
+                      <td colspan="6" class="text-center"><%=LOCAL_STRINGS.test_temperament_without[language]%></td>
+                    </tr>
+                  <% } %>
+                </tbody>
+              </table>
+            </div>
+            <div class="button-action mt-4">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+<!--  END *** CONTENT ***  -->
+<%- include('./footer-page-logged.ejs'); -%>
+<!--  BEGIN *** SCRIPTS ***  -->
+
+<!--  END *** SCRIPTS ***  -->
+<script>
+  <!--  nuevo bloque  -- 28 may 2025  -->
+    // Datos del test (solo 2 ejemplos)
+    const strengthsQuestions = [
+      {
+        number: 1,
+        options: [
+          { letter: 'a', text: '<%=LOCAL_TEST.strengths_op1a_lively[language]%>' },
+          { letter: 'b', text: '<%=LOCAL_TEST.strengths_op1b_adventurous[language]%>' },
+          { letter: 'c', text: '<%=LOCAL_TEST.strengths_op1c_analytical[language]%>' },
+          { letter: 'd', text: '<%=LOCAL_TEST.strengths_op1d_adaptable[language]%>' }
+        ]
+      },
+      {
+        number: 2,
+        options: [
+          { letter: 'a', text: '<%=LOCAL_TEST.strengths_op2a_playful[language]%>' },
+          { letter: 'b', text: '<%=LOCAL_TEST.strengths_op2b_persuasive[language]%>' },
+          { letter: 'c', text: '<%=LOCAL_TEST.strengths_op2c_persistent[language]%>' },
+          { letter: 'd', text: '<%=LOCAL_TEST.strengths_op2d_placid[language]%>' }
+        ]
+      },
+      {
+        number: 3,
+        options: [
+          { letter: 'a', text: '<%=LOCAL_TEST.strengths_op3a_sociable[language]%>' },
+          { letter: 'b', text: '<%=LOCAL_TEST.strengths_op3b_determined[language]%>' },
+          { letter: 'c', text: '<%=LOCAL_TEST.strengths_op3c_selfless[language]%>' },
+          { letter: 'd', text: '<%=LOCAL_TEST.strengths_op3d_submissive[language]%>' }
+        ]
+      },
+      {
+        number: 4,
+        options: [
+          { letter: 'a', text: '<%=LOCAL_TEST.strengths_op4a_convincing[language]%>' },
+          { letter: 'b', text: '<%=LOCAL_TEST.strengths_op4b_competitive[language]%>' },
+          { letter: 'c', text: '<%=LOCAL_TEST.strengths_op4c_considerate[language]%>' },
+          { letter: 'd', text: '<%=LOCAL_TEST.strengths_op4d_controlled[language]%>' }
+        ]
+      },
+      {
+        number: 5,
+        options: [
+          { letter: 'a', text: '<%=LOCAL_TEST.strengths_op5a_stimulating[language]%>' },
+          { letter: 'b', text: '<%=LOCAL_TEST.strengths_op5b_inventive[language]%>' },
+          { letter: 'c', text: '<%=LOCAL_TEST.strengths_op5c_respectful[language]%>' },
+          { letter: 'd', text: '<%=LOCAL_TEST.strengths_op5d_reserved[language]%>' }
+        ]
+      },
+      {
+        number: 6,
+        options: [
+          { letter: 'a', text: '<%=LOCAL_TEST.strengths_op6a_vibrant[language]%>' },
+          { letter: 'b', text: '<%=LOCAL_TEST.strengths_op6b_selfsufficient[language]%>' },
+          { letter: 'c', text: '<%=LOCAL_TEST.strengths_op6c_sensitive[language]%>' },
+          { letter: 'd', text: '<%=LOCAL_TEST.strengths_op6d_content[language]%>' }
+        ]
+      },
+      {
+        number: 7,
+        options: [
+          { letter: 'a', text: '<%=LOCAL_TEST.strengths_op7a_promoter[language]%>' },
+          { letter: 'b', text: '<%=LOCAL_TEST.strengths_op7b_positive[language]%>' },
+          { letter: 'c', text: '<%=LOCAL_TEST.strengths_op7c_planner[language]%>' },
+          { letter: 'd', text: '<%=LOCAL_TEST.strengths_op7d_patient[language]%>' }
+        ]
+      },
+      {
+        number: 8,
+        options: [
+          { letter: 'a', text: '<%=LOCAL_TEST.strengths_op8a_spontaneous[language]%>' },
+          { letter: 'b', text: '<%=LOCAL_TEST.strengths_op8b_confident[language]%>' },
+          { letter: 'c', text: '<%=LOCAL_TEST.strengths_op8c_scheduled[language]%>' },
+          { letter: 'd', text: '<%=LOCAL_TEST.strengths_op8d_shy[language]%>' }
+        ]
+      },
+      {
+        number: 9,
+        options: [
+          { letter: 'a', text: '<%=LOCAL_TEST.strengths_op9a_optimistic[language]%>' },
+          { letter: 'b', text: '<%=LOCAL_TEST.strengths_op9b_frank[language]%>' },
+          { letter: 'c', text: '<%=LOCAL_TEST.strengths_op9c_orderly[language]%>' },
+          { letter: 'd', text: '<%=LOCAL_TEST.strengths_op9d_obliging[language]%>' }
+        ]
+      },
+      {
+        number: 10,
+        options: [
+          { letter: 'a', text: '<%=LOCAL_TEST.strengths_op10a_humorous[language]%>' },
+          { letter: 'b', text: '<%=LOCAL_TEST.strengths_op10b_dominant[language]%>' },
+          { letter: 'c', text: '<%=LOCAL_TEST.strengths_op10c_faithful[language]%>' },
+          { letter: 'd', text: '<%=LOCAL_TEST.strengths_op10d_friendly[language]%>' }
+        ]
+      },
+      {
+        number: 11,
+        options: [
+          { letter: 'a', text: '<%=LOCAL_TEST.strengths_op11a_charming[language]%>' },
+          { letter: 'b', text: '<%=LOCAL_TEST.strengths_op11b_daring[language]%>' },
+          { letter: 'c', text: '<%=LOCAL_TEST.strengths_op11c_detailed[language]%>' },
+          { letter: 'd', text: '<%=LOCAL_TEST.strengths_op11d_diplomatic[language]%>' }
+        ]
+      },
+      {
+        number: 12,
+        options: [
+          { letter: 'a', text: '<%=LOCAL_TEST.strengths_op12a_cheerful[language]%>' },
+          { letter: 'b', text: '<%=LOCAL_TEST.strengths_op12b_confident[language]%>' },
+          { letter: 'c', text: '<%=LOCAL_TEST.strengths_op12c_cultured[language]%>' },
+          { letter: 'd', text: '<%=LOCAL_TEST.strengths_op12d_consistent[language]%>' }
+        ]
+      },
+      {
+        number: 13,
+        options: [
+          { letter: 'a', text: '<%=LOCAL_TEST.strengths_op13a_inspiring[language]%>' },
+          { letter: 'b', text: '<%=LOCAL_TEST.strengths_op13b_independent[language]%>' },
+          { letter: 'c', text: '<%=LOCAL_TEST.strengths_op13c_idealistic[language]%>' },
+          { letter: 'd', text: '<%=LOCAL_TEST.strengths_op13d_harmless[language]%>' }
+        ]
+      },
+      {
+        number: 14,
+        options: [
+          { letter: 'a', text: '<%=LOCAL_TEST.strengths_op14a_warm[language]%>' },
+          { letter: 'b', text: '<%=LOCAL_TEST.strengths_op14b_decisive[language]%>' },
+          { letter: 'c', text: '<%=LOCAL_TEST.strengths_op14c_introspective[language]%>' },
+          { letter: 'd', text: '<%=LOCAL_TEST.strengths_op14d_dryhumor[language]%>' }
+        ]
+      },
+      {
+        number: 15,
+        options: [
+          { letter: 'a', text: '<%=LOCAL_TEST.strengths_op15a_tractable[language]%>' },
+          { letter: 'b', text: '<%=LOCAL_TEST.strengths_op15b_instigator[language]%>' },
+          { letter: 'c', text: '<%=LOCAL_TEST.strengths_op15c_musical[language]%>' },
+          { letter: 'd', text: '<%=LOCAL_TEST.strengths_op15d_peacemaker[language]%>' }
+        ]
+      },
+      {
+        number: 16,
+        options: [
+          { letter: 'a', text: '<%=LOCAL_TEST.strengths_op16a_talker[language]%>' },
+          { letter: 'b', text: '<%=LOCAL_TEST.strengths_op16b_tenacious[language]%>' },
+          { letter: 'c', text: '<%=LOCAL_TEST.strengths_op16c_thoughtful[language]%>' },
+          { letter: 'd', text: '<%=LOCAL_TEST.strengths_op16d_tolerant[language]%>' }
+        ]
+      },
+      {
+        number: 17,
+        options: [
+          { letter: 'a', text: '<%=LOCAL_TEST.strengths_op17a_energetic[language]%>' },
+          { letter: 'b', text: '<%=LOCAL_TEST.strengths_op17b_leader[language]%>' },
+          { letter: 'c', text: '<%=LOCAL_TEST.strengths_op17c_loyal[language]%>' },
+          { letter: 'd', text: '<%=LOCAL_TEST.strengths_op17d_listener[language]%>' }
+        ]
+      },
+      {
+        number: 18,
+        options: [
+          { letter: 'a', text: '<%=LOCAL_TEST.strengths_op18a_lovable[language]%>' },
+          { letter: 'b', text: '<%=LOCAL_TEST.strengths_op18b_chief[language]%>' },
+          { letter: 'c', text: '<%=LOCAL_TEST.strengths_op18c_chartmaker[language]%>' },
+          { letter: 'd', text: '<%=LOCAL_TEST.strengths_op18d_contented[language]%>' }
+        ]
+      },
+      {
+        number: 19,
+        options: [
+          { letter: 'a', text: '<%=LOCAL_TEST.strengths_op19a_popular[language]%>' },
+          { letter: 'b', text: '<%=LOCAL_TEST.strengths_op19b_productive[language]%>' },
+          { letter: 'c', text: '<%=LOCAL_TEST.strengths_op19c_perfectionist[language]%>' },
+          { letter: 'd', text: '<%=LOCAL_TEST.strengths_op19d_permissive[language]%>' }
+        ]
+      },
+      {
+        number: 20,
+        options: [
+          { letter: 'a', text: '<%=LOCAL_TEST.strengths_op20a_jovial[language]%>' },
+          { letter: 'b', text: '<%=LOCAL_TEST.strengths_op20b_bold[language]%>' },
+          { letter: 'c', text: '<%=LOCAL_TEST.strengths_op20c_behaveswell[language]%>' },
+          { letter: 'd', text: '<%=LOCAL_TEST.strengths_op20d_balanced[language]%>' }
+        ]
+      }
+    ];
+
+    // Preguntas de debilidades (solo 2 ejemplos)
+    const weaknessesQuestions = [
+      {
+        number: 21,
+        options: [
+          { letter: 'a', text: '<%=LOCAL_TEST.weaknesses_op21a_strident[language]%>' },
+          { letter: 'b', text: '<%=LOCAL_TEST.weaknesses_op21b_bossy[language]%>' },
+          { letter: 'c', text: '<%=LOCAL_TEST.weaknesses_op21c_shy[language]%>' },
+          { letter: 'd', text: '<%=LOCAL_TEST.weaknesses_op21d_bland[language]%>' }
+        ]
+      },
+      {
+        number: 22,
+        options: [
+          { letter: 'a', text: '<%=LOCAL_TEST.weaknesses_op22a_undisciplined[language]%>' },
+          { letter: 'b', text: '<%=LOCAL_TEST.weaknesses_op22b_unsympathetic[language]%>' },
+          { letter: 'c', text: '<%=LOCAL_TEST.weaknesses_op22c_unforgiving[language]%>' },
+          { letter: 'd', text: '<%=LOCAL_TEST.weaknesses_op22d_unenthusiastic[language]%>' }
+        ]
+      },
+      {
+        number: 23,
+        options: [
+          { letter: 'a', text: '<%=LOCAL_TEST.weaknesses_op23a_repetitive[language]%>' },
+          { letter: 'b', text: '<%=LOCAL_TEST.weaknesses_op23b_resistant[language]%>' },
+          { letter: 'c', text: '<%=LOCAL_TEST.weaknesses_op23c_resentful[language]%>' },
+          { letter: 'd', text: '<%=LOCAL_TEST.weaknesses_op23d_reticent[language]%>' }
+        ]
+      },
+      {
+        number: 24,
+        options: [
+          { letter: 'a', text: '<%=LOCAL_TEST.weaknesses_op24a_forgetful[language]%>' },
+          { letter: 'b', text: '<%=LOCAL_TEST.weaknesses_op24b_frank[language]%>' },
+          { letter: 'c', text: '<%=LOCAL_TEST.weaknesses_op24c_demanding[language]%>' },
+          { letter: 'd', text: '<%=LOCAL_TEST.weaknesses_op24d_fearful[language]%>' }
+        ]
+      },
+      {
+        number: 25,
+        options: [
+          { letter: 'a', text: '<%=LOCAL_TEST.weaknesses_op25a_interrupts[language]%>' },
+          { letter: 'b', text: '<%=LOCAL_TEST.weaknesses_op25b_impatient[language]%>' },
+          { letter: 'c', text: '<%=LOCAL_TEST.weaknesses_op25c_insecure[language]%>' },
+          { letter: 'd', text: '<%=LOCAL_TEST.weaknesses_op25d_indecisive[language]%>' }
+        ]
+      },
+      {
+        number: 26,
+        options: [
+          { letter: 'a', text: '<%=LOCAL_TEST.weaknesses_op26a_unpredictable[language]%>' },
+          { letter: 'b', text: '<%=LOCAL_TEST.weaknesses_op26b_cold[language]%>' },
+          { letter: 'c', text: '<%=LOCAL_TEST.weaknesses_op26c_unpopular[language]%>' },
+          { letter: 'd', text: '<%=LOCAL_TEST.weaknesses_op26d_uncommitted[language]%>' }
+        ]
+      },
+      {
+        number: 27,
+        options: [
+          { letter: 'a', text: '<%=LOCAL_TEST.weaknesses_op27a_careless[language]%>' },
+          { letter: 'b', text: '<%=LOCAL_TEST.weaknesses_op27b_stubborn[language]%>' },
+          { letter: 'c', text: '<%=LOCAL_TEST.weaknesses_op27c_hardtoplease[language]%>' },
+          { letter: 'd', text: '<%=LOCAL_TEST.weaknesses_op27d_hesitant[language]%>' }
+        ]
+      },
+      {
+        number: 28,
+        options: [
+          { letter: 'a', text: '<%=LOCAL_TEST.weaknesses_op28a_permissive[language]%>' },
+          { letter: 'b', text: '<%=LOCAL_TEST.weaknesses_op28b_proud[language]%>' },
+          { letter: 'c', text: '<%=LOCAL_TEST.weaknesses_op28c_pessimistic[language]%>' },
+          { letter: 'd', text: '<%=LOCAL_TEST.weaknesses_op28d_plain[language]%>' }
+        ]
+      },
+      {
+        number: 29,
+        options: [
+          { letter: 'a', text: '<%=LOCAL_TEST.weaknesses_op29a_angryperson[language]%>' },
+          { letter: 'b', text: '<%=LOCAL_TEST.weaknesses_op29b_argumentative[language]%>' },
+          { letter: 'c', text: '<%=LOCAL_TEST.weaknesses_op29c_taciturn[language]%>' },
+          { letter: 'd', text: '<%=LOCAL_TEST.weaknesses_op29d_aimless[language]%>' }
+        ]
+      },
+      {
+        number: 30,
+        options: [
+          { letter: 'a', text: '<%=LOCAL_TEST.weaknesses_op30a_naive[language]%>' },
+          { letter: 'b', text: '<%=LOCAL_TEST.weaknesses_op30b_nervy[language]%>' },
+          { letter: 'c', text: '<%=LOCAL_TEST.weaknesses_op30c_negative[language]%>' },
+          { letter: 'd', text: '<%=LOCAL_TEST.weaknesses_op30d_nonchalant[language]%>' }
+        ]
+      },
+      {
+        number: 31,
+        options: [
+          { letter: 'a', text: '<%=LOCAL_TEST.weaknesses_op31a_wantscredit[language]%>' },
+          { letter: 'b', text: '<%=LOCAL_TEST.weaknesses_op31b_workaholic[language]%>' },
+          { letter: 'c', text: '<%=LOCAL_TEST.weaknesses_op31c_withdrawn[language]%>' },
+          { letter: 'd', text: '<%=LOCAL_TEST.weaknesses_op31d_worried[language]%>' }
+        ]
+      },
+      {
+        number: 32,
+        options: [
+          { letter: 'a', text: '<%=LOCAL_TEST.weaknesses_op32a_talkative[language]%>' },
+          { letter: 'b', text: '<%=LOCAL_TEST.weaknesses_op32b_tactless[language]%>' },
+          { letter: 'c', text: '<%=LOCAL_TEST.weaknesses_op32c_toosenitive[language]%>' },
+          { letter: 'd', text: '<%=LOCAL_TEST.weaknesses_op32d_timid[language]%>' }
+        ]
+      },
+      {
+        number: 33,
+        options: [
+          { letter: 'a', text: '<%=LOCAL_TEST.weaknesses_op33a_disorganized[language]%>' },
+          { letter: 'b', text: '<%=LOCAL_TEST.weaknesses_op33b_domineering[language]%>' },
+          { letter: 'c', text: '<%=LOCAL_TEST.weaknesses_op33c_depressed[language]%>' },
+          { letter: 'd', text: '<%=LOCAL_TEST.weaknesses_op33d_doubtful[language]%>' }
+        ]
+      },
+      {
+        number: 34,
+        options: [
+          { letter: 'a', text: '<%=LOCAL_TEST.weaknesses_op34a_inconsistent[language]%>' },
+          { letter: 'b', text: '<%=LOCAL_TEST.weaknesses_op34b_intolerant[language]%>' },
+          { letter: 'c', text: '<%=LOCAL_TEST.weaknesses_op34c_introverted[language]%>' },
+          { letter: 'd', text: '<%=LOCAL_TEST.weaknesses_op34d_indifferent[language]%>' }
+        ]
+      },
+      {
+        number: 35,
+        options: [
+          { letter: 'a', text: '<%=LOCAL_TEST.weaknesses_op35a_messy[language]%>' },
+          { letter: 'b', text: '<%=LOCAL_TEST.weaknesses_op35b_manipulative[language]%>' },
+          { letter: 'c', text: '<%=LOCAL_TEST.weaknesses_op35c_moody[language]%>' },
+          { letter: 'd', text: '<%=LOCAL_TEST.weaknesses_op35d_mumbles[language]%>' }
+        ]
+      },
+      {
+        number: 36,
+        options: [
+          { letter: 'a', text: '<%=LOCAL_TEST.weaknesses_op36a_showy[language]%>' },
+          { letter: 'b', text: '<%=LOCAL_TEST.weaknesses_op36b_stubborn[language]%>' },
+          { letter: 'c', text: '<%=LOCAL_TEST.weaknesses_op36c_skeptical[language]%>' },
+          { letter: 'd', text: '<%=LOCAL_TEST.weaknesses_op36d_slow[language]%>' }
+        ]
+      },
+      {
+        number: 37,
+        options: [
+          { letter: 'a', text: '<%=LOCAL_TEST.weaknesses_op37a_loud[language]%>' },
+          { letter: 'b', text: '<%=LOCAL_TEST.weaknesses_op37b_lordly[language]%>' },
+          { letter: 'c', text: '<%=LOCAL_TEST.weaknesses_op37c_loner[language]%>' },
+          { letter: 'd', text: '<%=LOCAL_TEST.weaknesses_op37d_lazy[language]%>' }
+        ]
+      },
+      {
+        number: 38,
+        options: [
+          { letter: 'a', text: '<%=LOCAL_TEST.weaknesses_op38a_scatterbrained[language]%>' },
+          { letter: 'b', text: '<%=LOCAL_TEST.weaknesses_op38b_shorttempered[language]%>' },
+          { letter: 'c', text: '<%=LOCAL_TEST.weaknesses_op38c_suspicious[language]%>' },
+          { letter: 'd', text: '<%=LOCAL_TEST.weaknesses_op38d_sluggish[language]%>' }
+        ]
+      },
+      {
+        number: 39,
+        options: [
+          { letter: 'a', text: '<%=LOCAL_TEST.weaknesses_op39a_restless[language]%>' },
+          { letter: 'b', text: '<%=LOCAL_TEST.weaknesses_op39b_rash[language]%>' },
+          { letter: 'c', text: '<%=LOCAL_TEST.weaknesses_op39c_revengeful[language]%>' },
+          { letter: 'd', text: '<%=LOCAL_TEST.weaknesses_op39d_reluctant[language]%>' }
+        ]
+      },
+      {
+        number: 40,
+        options: [
+          { letter: 'a', text: '<%=LOCAL_TEST.weaknesses_op40a_changeable[language]%>' },
+          { letter: 'b', text: '<%=LOCAL_TEST.weaknesses_op40b_crafty[language]%>' },
+          { letter: 'c', text: '<%=LOCAL_TEST.weaknesses_op40c_critical[language]%>' },
+          { letter: 'd', text: '<%=LOCAL_TEST.weaknesses_op40d_compromising[language]%>' }
+        ]
+      }
+    ];
+    const questions = [...strengthsQuestions, ...weaknessesQuestions];
+    const totalQuestions = questions.length;
+    let currentQuestion = 1;
+    const answers = new Map();
+
+    const questionTitle = document.getElementById("questionTitle");
+    const optionsContainer = document.getElementById("optionsContainer");
+    const questionCounter = document.getElementById("questionCounter");
+    const progressBar = document.getElementById("progressBar");
+    const btnNext = document.getElementById("btnNext");
+    const btnBack = document.getElementById("btnBack");
+
+    function loadQuestion(index) {
+      const q = questions[index - 1];
+      const labelViewResults = "<%=LOCAL_STRINGS.view_results[language]%>";
+      const labelNext = "<%=LOCAL_STRINGS.next[language]%>";
+      const labelQuestion = "<%=LOCAL_STRINGS.question[language]%>";
+      const labelOf = "<%=LOCAL_STRINGS.of[language]%>";
+      console.log("carga preguntas")
+      questionTitle.innerHTML = `${labelQuestion} ${q.number}`;
+      questionCounter.textContent = `${labelQuestion} ${index} ${labelOf} ${totalQuestions}`;
+      progressBar.style.width = `${(index / totalQuestions) * 100}%`;
+      progressBar.setAttribute("aria-valuenow", index);
+
+      optionsContainer.innerHTML = "";
+      q.options.forEach((opt) => {
+        const btn = document.createElement("button");
+        btn.className = "btn btn-outline-primary";
+        btn.innerHTML = opt.text;
+        btn.onclick = () => {
+          answers.set(index, opt.letter);
+          highlightSelected(index);
+          setTimeout(() => {
+            if (currentQuestion === index && currentQuestion < totalQuestions) {
+              currentQuestion++;
+              loadQuestion(currentQuestion);
+            }
+          }, 150);
+        };
+        btn.dataset.optionLetter = opt.letter;
+        optionsContainer.appendChild(btn);
+      });
+      highlightSelected(index);
+      btnNext.textContent = index === totalQuestions ? labelViewResults : labelNext;
+    }
+
+    function highlightSelected(index) {
+      const selected = answers.get(index);
+      document.querySelectorAll("#optionsContainer button").forEach(btn => {
+        btn.classList.remove("active");
+        if (btn.dataset.optionLetter === selected) {
+          btn.classList.add("active");
+        }
+      });
+    }
+
+    btnNext.addEventListener("click", () => {
+      if (!answers.has(currentQuestion)) {
+        alert("<%=LOCAL_TEST.select_one_option[language]%>");
+        return;
+      }
+
+      if (currentQuestion < totalQuestions) {
+        currentQuestion++;
+        loadQuestion(currentQuestion);
+      } else {
+        // Oculta el test y muestra resultados
+        document.getElementById("divTestSingleQuestion").classList.add("d-none");
+        document.getElementById("divResultsTemperament").classList.remove("d-none");
+
+        // Contar respuestas
+        const resultCounts = { a: 0, b: 0, c: 0, d: 0 };
+        answers.forEach(letter => {
+          if (resultCounts[letter]) resultCounts[letter]++;
+          else resultCounts[letter] = 1;
+        });
+
+        // Mostrar totales por letra
+        document.getElementById("result-a-display").textContent = resultCounts.a || 0;
+        document.getElementById("result-b-display").textContent = resultCounts.b || 0;
+        document.getElementById("result-c-display").textContent = resultCounts.c || 0;
+        document.getElementById("result-d-display").textContent = resultCounts.d || 0;
+
+        // Calcular porcentajes
+        const total = (resultCounts.a || 0) + (resultCounts.b || 0) + (resultCounts.c || 0) + (resultCounts.d || 0);
+        const percent = key => Math.round(((resultCounts[key] || 0) / total) * 100);
+
+        // Mostrar barras de progreso con porcentaje interno
+        document.getElementById("sanguine-bar").style.width = `${percent('a')}%`;
+        document.getElementById("sanguine-bar").textContent = `${percent('a')}%`;
+
+        document.getElementById("choleric-bar").style.width = `${percent('b')}%`;
+        document.getElementById("choleric-bar").textContent = `${percent('b')}%`;
+
+        document.getElementById("melancholic-bar").style.width = `${percent('c')}%`;
+        document.getElementById("melancholic-bar").textContent = `${percent('c')}%`;
+
+        document.getElementById("phlegmatic-bar").style.width = `${percent('d')}%`;
+        document.getElementById("phlegmatic-bar").textContent = `${percent('d')}%`;
+
+        // Etiquetas de temperamentos
+        const temperamentLabels = {
+          a: "<%=LOCAL_STRINGS.temperament_sanguine[language]%>",
+          b: "<%=LOCAL_STRINGS.temperament_choleric[language]%>",
+          c: "<%=LOCAL_STRINGS.temperament_melancholic[language]%>",
+          d: "<%=LOCAL_STRINGS.temperament_phlegmatic[language]%>"
+        };
+
+        // Descripción combinada
+        const desc = `<p><strong>${temperamentLabels[sorted[0][0]]} + ${temperamentLabels[sorted[1][0]]}</strong> — ` + "<%=LOCAL_TEST.temperament_description_combination[language]%>" + "</p>";
+        document.getElementById("temperament-description").innerHTML = desc;
+      }
+    });
+
+    btnBack.addEventListener("click", () => {
+      if (currentQuestion > 1) {
+        currentQuestion--;
+        loadQuestion(currentQuestion);
+      }
+    });
+
+    document.addEventListener("DOMContentLoaded", () => {
+      console.log("0")
+      const btnNewTest = document.getElementById("btnNewTest");
+      const btnMyTemperament = new SLButton('btnMyTemperament', {})
+      const btnStartTest = document.getElementById("btnStartTest");
+      const btnShowRecords = new SLButton('btnShowRecords', {})
+      const divNewTest = document.getElementById("divNewTest");
+      const divTestInstructions = document.getElementById("divTestInstructions");
+      const divTestSingleQuestion = document.getElementById("divTestSingleQuestion");
+      const divTestTemperament = document.getElementById('divTestTemperament');
+      const divTemperamentRecords = document.getElementById('divTemperamentRecords');
+      const divMyTemperament = document.getElementById('divMyTemperament');
+      btnMyTemperament.element.addEventListener('click', () => {
+        divMyTemperament.classList.remove('d-none');
+        divTemperamentRecords.classList.add('d-none');
+        divNewTest.classList.add('d-none');
+      });
+      btnShowRecords.element.addEventListener('click', () => {
+        divTemperamentRecords.classList.remove('d-none');
+        divMyTemperament.classList.add('d-none');
+        divNewTest.classList.add('d-none');
+      });
+      console.log("1")
+      if (btnNewTest) {
+        console.log("2")
+        btnNewTest.addEventListener("click", () => {
+          console.log("3")
+          divNewTest.classList.remove('d-none');
+          divTestInstructions.classList.remove("d-none");
+          divMyTemperament.classList.add('d-none');
+          divTemperamentRecords.classList.add('d-none');
+          divTestSingleQuestion.classList.add("d-none");
+        });
+      }
+      if (btnStartTest) {
+        btnStartTest.addEventListener("click", () => {
+          divNewTest.classList.remove('d-none');
+          divTestSingleQuestion.classList.remove("d-none");
+          divTestInstructions.classList.add("d-none");
+          currentQuestion = 1;
+          loadQuestion(currentQuestion);
+        });
+      }
+    });
+  <!--  fin nuevo bloque -- 28 may 2025  -->
+</script>
+</body>
+</html>
